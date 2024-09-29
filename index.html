@@ -7,28 +7,40 @@
   </head>
   <body>
     <h1>Star Wars planet list</h1>
+
+    <input type="text" id="planetInput" />
+    <button onclick="findPlanet()">search</button>
     <div id="planetList"></div>
     <script>
       const planetList = document.getElementById("planetList");
-      const planetButton = document.getElementsByClassName("planetButton");
+      const planetInput = document.getElementById("planetInput");
+
+      const findPlanet = async (planetName) => {
+        if (planetName == null) {
+          planetName = planetInput.value;
+        }
+        const response = await fetch(
+          `https://swapi.dev/api/planets?search=${planetName}`
+        );
+        const planet = await response.json();
+        if (planet.count != 1) {
+          return alert("planet not found");
+        }
+        alert(displayPlanetData(planet.results[0]));
+      };
 
       const getPlantets = async () => {
         const response = await fetch(
           "https://swapi.dev/api/planets?format=json"
         );
         const planets = await response.json();
-        console.log(planets);
         planets.results.forEach((planet) => {
-          planetList.innerHTML += `<button onClick="showPlanetData('${planet.url}')" class='planetButton'>${planet.name}</button>`;
+          planetList.innerHTML += `<button onClick="findPlanet('${planet.name}')" class='planetButton'>${planet.name}</button>`;
         });
       };
 
-      const showPlanetData = async (url) => {
-        const response = await fetch(url);
-        const planet = await response.json();
-        alert(
-          `nome ${planet.name} clima ${planet.climate} população ${planet.population} terreno ${planet.terrain}`
-        );
+      const displayPlanetData = (planet) => {
+        return `nome ${planet.name} clima ${planet.climate} população ${planet.population} terreno ${planet.terrain}`;
       };
 
       getPlantets();
