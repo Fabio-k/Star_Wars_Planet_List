@@ -3,47 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Star Wars planet list</title>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <h1>Star Wars planet list</h1>
+    <div id="planetCard">
+      <div id="planet" class="planetDefault"></div>
+      <div>
+        <h2 id="planetName">???</h2>
+        <p id="planetPopulation">---</p>
+        <p id="planetClime">---</p>
+        <p id="planetTerrain">---</p>
+      </div>
+    </div>
 
-    <input type="text" id="planetInput" />
-    <button onclick="findPlanet()">search</button>
-    <div id="planetList"></div>
-    <script>
-      const planetList = document.getElementById("planetList");
-      const planetInput = document.getElementById("planetInput");
+    <main>
+      <h1>Star Wars planet list</h1>
+      <div id="searchPlanet">
+        <input
+          type="text"
+          id="planetInput"
+          autocomplete="off"
+          placeholder="enter planet name"
+        />
+        <button onclick="findPlanet()">
+          <img src="icons/search.svg" alt="search icon" id="searchIcon" />
+        </button>
+      </div>
 
-      const findPlanet = async (planetName) => {
-        if (planetName == null) {
-          planetName = planetInput.value;
-        }
-        const response = await fetch(
-          `https://swapi.dev/api/planets?search=${planetName}`
-        );
-        const planet = await response.json();
-        if (planet.count != 1) {
-          return alert("planet not found");
-        }
-        alert(displayPlanetData(planet.results[0]));
-      };
+      <div id="planetList"></div>
+      <div id="pageDiv">
+        <button
+          id="previousButton"
+          onclick="previousPlanets()"
+          class="pageButton"
+        >
+          previous
+        </button>
+        <button id="nextButton" onclick="nextPlanets()" class="pageButton">
+          next
+        </button>
+      </div>
+    </main>
 
-      const getPlantets = async () => {
-        const response = await fetch(
-          "https://swapi.dev/api/planets?format=json"
-        );
-        const planets = await response.json();
-        planets.results.forEach((planet) => {
-          planetList.innerHTML += `<button onClick="findPlanet('${planet.name}')" class='planetButton'>${planet.name}</button>`;
-        });
-      };
-
-      const displayPlanetData = (planet) => {
-        return `nome ${planet.name} clima ${planet.climate} população ${planet.population} terreno ${planet.terrain}`;
-      };
-
-      getPlantets();
-    </script>
+    <script src="index.js"></script>
   </body>
 </html>

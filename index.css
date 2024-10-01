@@ -1,0 +1,160 @@
+@font-face {
+  font-family: "starjedi";
+  src: url("/font/Starjedi.ttf");
+}
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 60%;
+}
+button {
+  border-radius: 10px;
+  border: 2px solid rgb(230, 230, 230);
+  cursor: pointer;
+}
+h1 {
+  font-family: "starjedi";
+}
+#planetCard {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  min-width: 40%;
+  height: 100%;
+  background-color: rgb(64, 64, 64);
+  color: rgb(255, 230, 0);
+}
+
+#planetCard div {
+  text-align: center;
+}
+
+#planet {
+  border-radius: 50%;
+  height: 180px;
+  width: 180px;
+  min-width: 140px;
+}
+
+.planetDefault {
+  background: rgb(217, 217, 217);
+  background: linear-gradient(
+    328deg,
+    rgb(139, 139, 139) 0%,
+    rgb(182, 182, 182) 50%,
+    rgb(239, 239, 239) 100%
+  );
+}
+
+.planetGreen {
+  background: rgb(217, 217, 217);
+  background: linear-gradient(
+    328deg,
+    rgb(25, 213, 0) 0%,
+    rgb(73, 197, 1) 50%,
+    rgb(169, 255, 103) 100%
+  );
+}
+
+.planetYellow {
+  background: rgb(217, 217, 217);
+  background: linear-gradient(
+    328deg,
+    rgb(230, 218, 4) 0%,
+    rgb(255, 231, 19) 50%,
+    rgb(236, 251, 73) 100%
+  );
+}
+
+.planetBlue {
+  background: rgb(217, 217, 217);
+  background: linear-gradient(
+    328deg,
+    rgb(1, 109, 198) 0%,
+    rgb(0, 166, 232) 50%,
+    rgb(48, 210, 255) 100%
+  );
+}
+
+#planetList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  min-height: 120px;
+}
+
+#planetList div {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#searchPlanet {
+  position: relative;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+#searchPlanet input {
+  border: 2px solid rgb(217, 217, 217);
+  border-radius: 30px;
+  padding: 10px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#searchPlanet button {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: rgb(255, 230, 0);
+  cursor: pointer;
+}
+
+#searchIcon {
+  width: 100%;
+  color: black;
+}
+
+#pageDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 170px;
+}
+
+.pageButton {
+  color: white;
+  background-color: orange;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  width: 80px;
+  margin-top: 20px;
+}
+
+.pageButton:disabled {
+  background-color: rgb(121, 121, 121);
+  cursor: default;
+}
