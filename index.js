@@ -128,3 +128,18 @@ const formatNumberWithCommas = (number) => {
 };
 
 getPlanets(PLANETS_URL);
+
+window.addEventListener("load", function () {
+  const planet = document.getElementById("planet");
+  const buttonPlanet = this.document.getElementById("searchButton");
+  const updateHeight = () => {
+    const width = planet.offsetWidth;
+    const buttonWidth = buttonPlanet.offsetWidth;
+    planet.style.height = width + "px";
+    buttonPlanet.style.height = buttonWidth + "px";
+  };
+
+  updateHeight();
+
+  window.addEventListener("resize", updateHeight);
+});

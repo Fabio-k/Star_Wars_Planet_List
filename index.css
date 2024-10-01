@@ -2,6 +2,7 @@
   font-family: "starjedi";
   src: url("/font/Starjedi.ttf");
 }
+
 body {
   height: 100vh;
   display: flex;
@@ -18,11 +19,14 @@ main {
 }
 button {
   border-radius: 10px;
+  background-color: rgb(226, 226, 226);
   border: 2px solid rgb(230, 230, 230);
   cursor: pointer;
+  font-size: inherit;
 }
 h1 {
   font-family: "starjedi";
+  font-size: 2rem;
 }
 #planetCard {
   box-sizing: border-box;
@@ -31,8 +35,8 @@ h1 {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  min-width: 40%;
-  height: 100%;
+  min-width: 40vw;
+  height: 100vh;
   background-color: rgb(64, 64, 64);
   color: rgb(255, 230, 0);
 }
@@ -43,9 +47,7 @@ h1 {
 
 #planet {
   border-radius: 50%;
-  height: 180px;
-  width: 180px;
-  min-width: 140px;
+  width: 50%;
 }
 
 .planetDefault {
@@ -115,17 +117,17 @@ h1 {
 #searchPlanet input {
   border: 2px solid rgb(217, 217, 217);
   border-radius: 30px;
-  padding: 10px 10px;
+  padding: 4% 10px;
   width: 100%;
   box-sizing: border-box;
+  font-size: inherit;
 }
 
 #searchPlanet button {
   position: absolute;
   top: 50%;
   right: 5px;
-  height: 30px;
-  width: 30px;
+  width: 10%;
   border-radius: 50%;
   transform: translateY(-50%);
   border: none;
@@ -150,11 +152,36 @@ h1 {
   border: none;
   padding: 5px 10px;
   border-radius: 20px;
-  width: 80px;
+  min-width: 80px;
   margin-top: 20px;
+  font-size: 1rem;
 }
 
 .pageButton:disabled {
   background-color: rgb(121, 121, 121);
   cursor: default;
+}
+
+@media (min-width: 1200px) {
+  body {
+    font-size: 1.4vw;
+  }
+  h1 {
+    font-size: 3.4vw;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    font-size: 1.2vw; /* Ajuste dinâmico baseado na largura da viewport */
+  }
+  h1 {
+    font-size: 3vw;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 1vw; /* Ajuste dinâmico baseado na largura da viewport */
+  }
 }
