@@ -1,6 +1,7 @@
 @font-face {
   font-family: "starjedi";
-  src: url("/font/Starjedi.ttf");
+  src: url("../font/Starjedi.ttf"), format("truetype"),
+    url("../font/Starjhol.ttf"), format("truetype");
 }
 
 body {

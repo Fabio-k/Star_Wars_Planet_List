@@ -4,6 +4,6 @@
 
 Obtenha dados sobre um planeta do universo de star wars de maneira simples.
 
-## Objectivo
+## Objetivo
 
 projeto feito para aprimorar meus conhecimentos em html, css e js.
