@@ -1,6 +1,7 @@
 const planetList = document.getElementById("planetList");
 const planetInput = document.getElementById("planetInput");
 const PLANETS_URL = "https://swapi.dev/api/planets?format=json";
+const RESIDENTS_LIMIT = 5;
 let next_planets_url;
 let previous_planets_url;
 let isLoadingPlanet = false;
@@ -132,6 +133,7 @@ const getPlanets = async (url) => {
   updatePageButtonsUrl(responseBody);
 
   planets = responseBody.results;
+  console.log(planets);
 };
 
 const buildPlanetButton = (planet) => {
@@ -143,7 +145,7 @@ const buildPlanetButton = (planet) => {
   return button;
 };
 
-const displayPlanetData = (planet) => {
+const displayPlanetData = async (planet) => {
   document.getElementById("planetName").innerText = planet.name;
   document.getElementById("planetPopulation").innerText =
     "Population: " + formatNumberWithCommas(planet.population);
@@ -152,6 +154,39 @@ const displayPlanetData = (planet) => {
   document.getElementById("planetTerrain").innerText = planet.terrain;
 
   document.getElementById("planet").classList = planetStyle(planet.terrain);
+
+  const residentTable = document.getElementById("residentTable");
+  residentTable.innerHTML =
+    "<caption>popular residents</caption></caption><tr><th>name</th><th>birth date</th></tr>";
+  if (planet.residents.length == 0) {
+    residentTable.innerHTML = "no popular residents found";
+  }
+  let residentCount = 0;
+  for (let residentUrl of planet.residents) {
+    if (residentCount >= 4) {
+      return;
+    }
+    const response = await fetch(residentUrl + "?format=json");
+    let resident = await response.json();
+
+    const residentRow = await buildResidentsRow(resident);
+    residentTable.appendChild(residentRow);
+    residentCount++;
+  }
+};
+
+const buildResidentsRow = async (resident) => {
+  const residentRow = document.createElement("tr");
+  const residentName = document.createElement("td");
+  const residentBirthYear = document.createElement("td");
+
+  residentName.textContent = resident.name;
+  residentBirthYear.textContent = resident.birth_year;
+
+  residentRow.appendChild(residentName);
+  residentRow.appendChild(residentBirthYear);
+
+  return residentRow;
 };
 
 const formatNumberWithCommas = (number) => {

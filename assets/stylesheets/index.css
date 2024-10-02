@@ -10,6 +10,17 @@ body {
   align-items: center;
   margin: 0;
 }
+
+table,
+caption,
+th,
+td {
+  border: 1px solid yellow;
+  border-collapse: collapse;
+}
+td {
+  padding: 5px;
+}
 main {
   display: flex;
   flex-direction: column;
@@ -98,7 +109,7 @@ h1 {
   align-content: center;
   gap: 10px;
   margin-top: 20px;
-  min-height: 30%;
+  min-height: 25%;
 }
 
 #planetList div {
@@ -151,7 +162,7 @@ h1 {
   color: white;
   background-color: orange;
   border: none;
-  padding: 5px 10px;
+  padding: 6px 10px;
   border-radius: 20px;
   min-width: 80px;
   margin-top: 20px;
