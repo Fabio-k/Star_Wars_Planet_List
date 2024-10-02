@@ -4,6 +4,7 @@ const PLANETS_URL = "https://swapi.dev/api/planets?format=json";
 let next_planets_url;
 let previous_planets_url;
 let isLoadingPlanet = false;
+let planets;
 
 const planetStyle = (terrain) => {
   const green = [
@@ -38,10 +39,16 @@ const planetStyle = (terrain) => {
 };
 
 const findPlanet = async (planetName) => {
+  let cachedPlanet = getCachedPlaned(planetName);
+  if (cachedPlanet) {
+    return displayPlanetData(cachedPlanet);
+  }
+
   if (isLoadingPlanet) {
     return;
   }
   isLoadingPlanet = true;
+
   if (planetName == null) {
     planetName = planetInput.value;
   }
@@ -57,56 +64,83 @@ const findPlanet = async (planetName) => {
   displayPlanetData(planet.results[0]);
 };
 
+const getCachedPlaned = (planetName) => {
+  for (let planet of planets) {
+    if (planet.name == planetName) {
+      return planet;
+    }
+  }
+  return null;
+};
+
 const nextPlanets = () => {
-  getPlanets(next_planets_url);
+  buildPlanetsList(next_planets_url);
 };
 
 const previousPlanets = () => {
-  getPlanets(previous_planets_url);
+  buildPlanetsList(previous_planets_url);
 };
 
 const updatePageButtonsUrl = (planets) => {
   const nextButton = document.getElementById("nextButton");
   const previousButton = document.getElementById("previousButton");
-  console.log("called");
+
+  nextButton.disabled = true;
+  previousButton.disabled = true;
+
   if (planets.next) {
     next_planets_url = planets.next;
     nextButton.disabled = false;
-  } else {
-    nextButton.disabled = true;
   }
+
   if (planets.previous) {
     previous_planets_url = planets.previous;
     previousButton.disabled = false;
+  }
+};
+
+const buildPlanetsList = async (url) => {
+  console.log("CALLED");
+  if (url) {
+    await getPlanets(url);
   } else {
-    previousButton.disabled = true;
+    await getPlanets(PLANETS_URL);
+  }
+
+  const rowLimits = [3, 4, 3];
+
+  let lastButtonIndex = 0;
+
+  for (let rowLimit of rowLimits) {
+    let div = document.createElement("div");
+    let firstButtonIndex = lastButtonIndex;
+    lastButtonIndex += rowLimit;
+
+    for (let j = firstButtonIndex; j < lastButtonIndex; j++) {
+      const button = buildPlanetButton(planets[j]);
+      div.appendChild(button);
+    }
+    planetList.appendChild(div);
   }
 };
 
 const getPlanets = async (url) => {
   planetList.innerHTML = "";
   const response = await fetch(url);
-  const planets = await response.json();
+  const responseBody = await response.json();
 
-  updatePageButtonsUrl(planets);
+  updatePageButtonsUrl(responseBody);
 
-  const limit = [3, 4, 3];
-  let lastButtonIndex = 0;
-  for (let i = 0; i < 3; i++) {
-    let div = document.createElement("div");
-    let firstButtonIndex = lastButtonIndex;
-    lastButtonIndex += limit[i];
+  planets = responseBody.results;
+};
 
-    for (let j = firstButtonIndex; j < lastButtonIndex; j++) {
-      let planet = planets.results[j];
-      const button = document.createElement("button");
-      button.className = "planetButton";
-      button.textContent = planet.name;
-      button.setAttribute("onClick", `findPlanet('${planet.name}')`);
-      div.appendChild(button);
-    }
-    planetList.appendChild(div);
-  }
+const buildPlanetButton = (planet) => {
+  const button = document.createElement("button");
+  button.className = "planetButton";
+  button.textContent = planet.name;
+  button.setAttribute("onClick", `findPlanet('${planet.name}')`);
+
+  return button;
 };
 
 const displayPlanetData = (planet) => {
@@ -127,14 +161,16 @@ const formatNumberWithCommas = (number) => {
   return Intl.NumberFormat("en-Us").format(number);
 };
 
-getPlanets(PLANETS_URL);
+buildPlanetsList();
 
 window.addEventListener("load", function () {
   const planet = document.getElementById("planet");
   const buttonPlanet = this.document.getElementById("searchButton");
+
   const updateHeight = () => {
     const width = planet.offsetWidth;
     const buttonWidth = buttonPlanet.offsetWidth;
+
     planet.style.height = width + "px";
     buttonPlanet.style.height = buttonWidth + "px";
   };
